@@ -32,7 +32,6 @@ void countC()
 }
 void *thr_A()
 {
-    printf("hia");
     struct timespec start;
     struct timespec end;
     struct sched_param *A = (struct sched_param *)malloc(sizeof(struct sched_param));
@@ -46,7 +45,7 @@ void *thr_A()
     countA();
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
-    printf("%f\n",totalrt);
+
     printf("The runtime of thread A is %f seconds\n", totalrt);
     pthread_exit(NULL);
 
@@ -54,7 +53,6 @@ void *thr_A()
 }
 void *thr_B()
 {
-    printf("hi");
     struct timespec start;
     struct timespec end;
     struct sched_param *B = (struct sched_param *)malloc(sizeof(struct sched_param));
@@ -67,7 +65,7 @@ void *thr_B()
     countB();
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
-    printf("%f\n",totalrt);
+
     printf("The runtime of thread B is %f seconds\n", totalrt);
     pthread_exit(NULL);
 
@@ -75,7 +73,6 @@ void *thr_B()
 }
 void *thr_C()
 {
-    printf("hib");
     struct timespec start;
     struct timespec end;
     struct sched_param *C = (struct sched_param *)malloc(sizeof(struct sched_param));
@@ -89,7 +86,7 @@ void *thr_C()
     countC();
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
-    printf("%f\n",totalrt);
+
     printf("The runtime of Thread C is %f seconds\n", totalrt);
     pthread_exit(NULL);
 
@@ -97,25 +94,27 @@ void *thr_C()
 }
 int main()
 {
-    //printf("hi");
     pthread_t p1;
     pthread_t p2;
     pthread_t p3;
+    printf("1\n");
     if (pthread_create(&p1, NULL, &thr_A, NULL) != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
     }
-
+    printf("2\n");
     if (pthread_create(&p2, NULL, &thr_B, NULL) != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
     }
+    printf("3\n");
     if (pthread_create(&p3, NULL, &thr_C, NULL) != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
     }
+    printf("4\n");
     return 0;
 }
