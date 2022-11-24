@@ -94,6 +94,7 @@ void *thr_C()
 }
 int main()
 {
+    printf("hi");
     pthread_t p1;
     pthread_t p2;
     pthread_t p3;
