@@ -6,31 +6,7 @@
 #include <time.h>
 #include <sched.h>
 
-void countA()
-{
-    unsigned long long i = 0;
-    while (i != 4294967295)
-    {
-        i++;
-    }
-}
-void countB()
-{
-    unsigned long long int i = 0;
-    while (i != 4294967295)
-    {
-        i++;
-    }
-}
-void countC()
-{
-    unsigned long long int i = 0;
-    while (i != 4294967295)
-    {
-        i++;
-    }
-}
-void *thr_A()
+void *countA()
 {
     struct timespec start;
     struct timespec end;
@@ -39,9 +15,14 @@ void *thr_A()
     {
         A->sched_priority = 0;
     }
+    nice(0);
     pthread_setschedparam(pthread_self(), SCHED_OTHER, A);
     clock_gettime(CLOCK_REALTIME, &start);
-    countA();
+    unsigned long long i = 0;
+    while (i != 4294967295)
+    {
+        i++;
+    }
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
@@ -49,7 +30,7 @@ void *thr_A()
 
     return 0;
 }
-void *thr_B()
+void *countB()
 {
     struct timespec start;
     struct timespec end;
@@ -60,7 +41,11 @@ void *thr_B()
     }
     pthread_setschedparam(pthread_self(), SCHED_RR, B);
     clock_gettime(CLOCK_REALTIME, &start);
-    countB();
+    unsigned long long i = 0;
+    while (i != 4294967295)
+    {
+        i++;
+    }
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
@@ -68,7 +53,7 @@ void *thr_B()
 
     return 0;
 }
-void *thr_C()
+void *countC()
 {
     struct timespec start;
     struct timespec end;
@@ -80,7 +65,11 @@ void *thr_C()
 
     pthread_setschedparam(pthread_self(), SCHED_FIFO, C);
     clock_gettime(CLOCK_REALTIME, &start);
-    countC();
+    unsigned long long i = 0;
+    while (i != 4294967295)
+    {
+        i++;
+    }
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
@@ -93,18 +82,18 @@ int main()
     pthread_t p1;
     pthread_t p2;
     pthread_t p3;
-    if (pthread_create(&p1, NULL, &thr_A, NULL) != 0)
+    if (pthread_create(&p1, NULL, &countA, NULL) != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
     }
 
-    if (pthread_create(&p2, NULL, &thr_B, NULL) != 0)
+    if (pthread_create(&p2, NULL, &countB, NULL) != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
     }
-    if (pthread_create(&p3, NULL, &thr_C, NULL) != 0)
+    if (pthread_create(&p3, NULL, &countC, NULL) != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
