@@ -122,7 +122,6 @@ int main()
         perror("FAILED TO CREATE THREAD");
         return 1;
     }
-    pthre
         printf("4\n");
     return 0;
 }
