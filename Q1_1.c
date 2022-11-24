@@ -98,19 +98,22 @@ int main()
     pthread_t p2;
     pthread_t p3;
     printf("1\n");
-    if (pthread_create(&p1, NULL, &thr_A, NULL) != 0)
+    int check1 = pthread_create(&p1, NULL, thr_A, NULL);
+    if (check1 != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
     }
     printf("2\n");
-    if (pthread_create(&p2, NULL, &thr_B, NULL) != 0)
+    int check2 = pthread_create(&p2, NULL, thr_B, NULL);
+    if (check2 != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
     }
     printf("3\n");
-    if (pthread_create(&p3, NULL, &thr_C, NULL) != 0)
+    int check3 = pthread_create(&p3, NULL, thr_C, NULL);
+    if (check3 != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
