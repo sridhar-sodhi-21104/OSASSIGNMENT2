@@ -11,8 +11,8 @@ void callfork(int a)
     if (a == 1)
     {
         pid_t p1;
-        struct timespac start;
-        struct timespac end;
+        struct timespec start;
+        struct timespec end;
         clock_gettime(CLOCK_REALTIME, &start);
         p1 = fork();
         struct sched_param *A = (struct sched_param *)malloc(sizeof(struct sched_param));
@@ -28,7 +28,7 @@ void callfork(int a)
         }
         else if (p1 == 0)
         {
-            execlp("/bin/bash", "sh", "b1.sh", NULL);
+            execlp("/bin/bash", "sh", "bash1.sh", NULL);
         }
         else
         {
@@ -44,8 +44,8 @@ void callfork(int a)
     else if (a == 2)
     {
         pid_t p2;
-        struct timespac start;
-        struct timespac end;
+        struct timespec start;
+        struct timespec end;
         clock_gettime(CLOCK_REALTIME, &start);
         p2 = fork();
         struct sched_param *B = (struct sched_param *)malloc(sizeof(struct sched_param));
@@ -61,7 +61,7 @@ void callfork(int a)
         }
         else if (p2 == 0)
         {
-            execlp("/bin/bash", "sh", "b2.sh", NULL);
+            execlp("/bin/bash", "sh", "bash2.sh", NULL);
         }
         else
         {
@@ -77,8 +77,8 @@ void callfork(int a)
     else if (a == 3)
     {
         pid_t p3;
-        struct timespac start;
-        struct timespac end;
+        struct timespec start;
+        struct timespec end;
         clock_gettime(CLOCK_REALTIME, &start);
         p3 = fork();
         struct sched_param *B = (struct sched_param *)malloc(sizeof(struct sched_param));
@@ -94,7 +94,7 @@ void callfork(int a)
         }
         else if (p3 == 0)
         {
-            execlp("/bin/bash", "sh", "b3.sh", NULL);
+            execlp("/bin/bash", "sh", "bash3.sh", NULL);
         }
         else
         {
