@@ -46,8 +46,7 @@ void *thr_A()
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
-    printf("The runtime of thread A is %f seconds\n", totalrt);
-    pthread_exit(NULL);
+    printf("The runtime is %f seconds\n", totalrt);
 
     return 0;
 }
@@ -58,7 +57,7 @@ void *thr_B()
     struct sched_param *B = (struct sched_param *)malloc(sizeof(struct sched_param));
     if (B != NULL)
     {
-        B->sched_priority = 1;
+        B->sched_priority = 0;
     }
     pthread_setschedparam(pthread_self(), SCHED_RR, B);
     clock_gettime(CLOCK_REALTIME, &start);
@@ -66,8 +65,7 @@ void *thr_B()
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
-    printf("The runtime of thread B is %f seconds\n", totalrt);
-    pthread_exit(NULL);
+    printf("The runtime is %f seconds\n", totalrt);
 
     return 0;
 }
@@ -78,7 +76,7 @@ void *thr_C()
     struct sched_param *C = (struct sched_param *)malloc(sizeof(struct sched_param));
     if (C != NULL)
     {
-        C->sched_priority = 1;
+        C->sched_priority = 0;
     }
 
     pthread_setschedparam(pthread_self(), SCHED_FIFO, C);
@@ -87,8 +85,7 @@ void *thr_C()
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
-    printf("The runtime of Thread C is %f seconds\n", totalrt);
-    pthread_exit(NULL);
+    printf("The runtime is %f seconds\n", totalrt);
 
     return 0;
 }
@@ -97,31 +94,33 @@ int main()
     pthread_t p1;
     pthread_t p2;
     pthread_t p3;
-    pthread_attr_t attr1, attr2, attr3;
-    pthread_attr_init(&attr1);
-    pthread_attr_init(&attr2);
-    pthread_attr_init(&attr3);
-    printf("1\n");
-    int check1 = pthread_create(&p1, &attr1, thr_A, NULL);
-    if (check1 != 0)
+    if (pthread_create(&p1, NULL, &thr_A, NULL) != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
     }
-    printf("2\n");
-    int check2 = pthread_create(&p2, &attr2, thr_B, NULL);
-    if (check2 != 0)
+
+    if (pthread_create(&p2, NULL, &thr_B, NULL) != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
     }
-    printf("3\n");
-    int check3 = pthread_create(&p3, &attr3, thr_C, NULL);
-    if (check3 != 0)
+    if (pthread_create(&p3, NULL, &thr_C, NULL) != 0)
     {
         perror("FAILED TO CREATE THREAD");
         return 1;
     }
-        printf("4\n");
+    if (pthread_join(p1, NULL) != 0)
+    {
+        return 1;
+    }
+    if (pthread_join(p2, NULL) != 0)
+    {
+        return 1;
+    }
+    if (pthread_join(p3, NULL) != 0)
+    {
+        return 1;
+    }
     return 0;
 }
