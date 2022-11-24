@@ -45,7 +45,7 @@ void *thr_A()
     countA();
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
-
+    printf("%f\n",totalrt);
     printf("The runtime of thread A is %f seconds\n", totalrt);
     pthread_exit(NULL);
 
@@ -65,7 +65,7 @@ void *thr_B()
     countB();
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
-
+    printf("%f\n",totalrt);
     printf("The runtime of thread B is %f seconds\n", totalrt);
     pthread_exit(NULL);
 
@@ -86,7 +86,7 @@ void *thr_C()
     countC();
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
-
+    printf("%f\n",totalrt);
     printf("The runtime of Thread C is %f seconds\n", totalrt);
     pthread_exit(NULL);
 
@@ -94,7 +94,7 @@ void *thr_C()
 }
 int main()
 {
-    printf("hi");
+    //printf("hi");
     pthread_t p1;
     pthread_t p2;
     pthread_t p3;
