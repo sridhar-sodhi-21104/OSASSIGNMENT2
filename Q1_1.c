@@ -32,6 +32,7 @@ void countC()
 }
 void *thr_A()
 {
+    printf("hia");
     struct timespec start;
     struct timespec end;
     struct sched_param *A = (struct sched_param *)malloc(sizeof(struct sched_param));
@@ -53,6 +54,7 @@ void *thr_A()
 }
 void *thr_B()
 {
+    printf("hi");
     struct timespec start;
     struct timespec end;
     struct sched_param *B = (struct sched_param *)malloc(sizeof(struct sched_param));
@@ -73,6 +75,7 @@ void *thr_B()
 }
 void *thr_C()
 {
+    printf("hib");
     struct timespec start;
     struct timespec end;
     struct sched_param *C = (struct sched_param *)malloc(sizeof(struct sched_param));
