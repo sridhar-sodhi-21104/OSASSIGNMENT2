@@ -15,7 +15,7 @@ void callfork(int a)
         struct timespec end;
         clock_gettime(CLOCK_REALTIME, &start);
         p1 = fork();
-        struct sched_param *A = (struct sched_param)malloc(sizeof(struct sched_param));
+        struct sched_param *A = (struct sched_param *)malloc(sizeof(struct sched_param));
         if (A != NULL)
         {
             A->sched_priority = 0;
@@ -37,8 +37,8 @@ void callfork(int a)
             double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
             FILE *outputfile = fopen("result.txt", "a");
             printf("The runtime is %lf seconds\n", totalrt);
-            fprintf(result, "FIRST: %lf\n", totalrt);
-            fclose(result);
+            fprintf(outputfile, "FIRST: %lf\n", totalrt);
+            fclose(outputfile);
         }
     }
     else if (a == 2)
@@ -70,8 +70,8 @@ void callfork(int a)
             double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
             FILE *outputfile = fopen("result.txt", "a");
             printf("The runtime is %lf seconds\n", totalrt);
-            fprintf(result, "SECOND: %lf\n", totalrt);
-            fclose(result);
+            fprintf(outputfile, "SECOND: %lf\n", totalrt);
+            fclose(outputfile);
         }
     }
     else if (a == 3)
@@ -103,8 +103,8 @@ void callfork(int a)
             double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
             FILE *outputfile = fopen("result.txt", "a");
             printf("The runtime is %lf seconds\n", totalrt);
-            fprintf(result, "THIRD: %lf\n", totalrt);
-            fclose(result);
+            fprintf(outputfile, "THIRD: %lf\n", totalrt);
+            fclose(outputfile);
         }
     }
 }
