@@ -26,7 +26,7 @@ void *countA()
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
-    printf("The runtime is %f seconds\n", totalrt);
+    printf("The runtime of A is %f seconds\n", totalrt);
 
     return 0;
 }
@@ -49,7 +49,7 @@ void *countB()
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
-    printf("The runtime is %f seconds\n", totalrt);
+    printf("The runtime  of B is %f seconds\n", totalrt);
 
     return 0;
 }
@@ -73,7 +73,7 @@ void *countC()
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
-    printf("The runtime is %f seconds\n", totalrt);
+    printf("The runtime of C is %f seconds\n", totalrt);
 
     return 0;
 }
