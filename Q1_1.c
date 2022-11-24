@@ -39,7 +39,6 @@ void *thr_A()
     {
         A->sched_priority = 0;
     }
-    nice(0);
     pthread_setschedparam(pthread_self(), SCHED_OTHER, A);
     clock_gettime(CLOCK_REALTIME, &start);
     countA();
@@ -57,7 +56,7 @@ void *thr_B()
     struct sched_param *B = (struct sched_param *)malloc(sizeof(struct sched_param));
     if (B != NULL)
     {
-        B->sched_priority = 0;
+        B->sched_priority = 1;
     }
     pthread_setschedparam(pthread_self(), SCHED_RR, B);
     clock_gettime(CLOCK_REALTIME, &start);
@@ -76,7 +75,7 @@ void *thr_C()
     struct sched_param *C = (struct sched_param *)malloc(sizeof(struct sched_param));
     if (C != NULL)
     {
-        C->sched_priority = 0;
+        C->sched_priority = 1;
     }
 
     pthread_setschedparam(pthread_self(), SCHED_FIFO, C);
