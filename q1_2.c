@@ -15,12 +15,12 @@ void callfork(int a)
         struct timespec end;
         clock_gettime(CLOCK_REALTIME, &start);
         p1 = fork();
-        struct sched_param *A = (struct sched_param *)malloc(sizeof(struct sched_param));
+        struct sched_param *A = (struct sched_param)malloc(sizeof(struct sched_param));
         if (A != NULL)
         {
             A->sched_priority = 0;
         }
-        sched_setscheduler(p1, SCHED_OTHER, &A);
+        sched_setscheduler(p1, SCHED_OTHER, A);
         if (p1 < 0)
         {
             printf("Fork failed\n");
@@ -53,7 +53,7 @@ void callfork(int a)
         {
             B->sched_priority = 1;
         }
-        sched_setscheduler(p2, SCHED_OTHER, &A);
+        sched_setscheduler(p2, SCHED_FIFO, B);
         if (p2 < 0)
         {
             printf("Fork failed\n");
@@ -81,12 +81,12 @@ void callfork(int a)
         struct timespec end;
         clock_gettime(CLOCK_REALTIME, &start);
         p3 = fork();
-        struct sched_param *B = (struct sched_param *)malloc(sizeof(struct sched_param));
-        if (B != NULL)
+        struct sched_param *C = (struct sched_param *)malloc(sizeof(struct sched_param));
+        if (C != NULL)
         {
-            B->sched_priority = 1;
+            C->sched_priority = 1;
         }
-        sched_setscheduler(p3, SCHED_OTHER, &A);
+        sched_setscheduler(p3, SCHED_RR, C);
         if (p3 < 0)
         {
             printf("Fork failed\n");
