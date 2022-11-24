@@ -9,7 +9,7 @@
 int main()
 {
 
-    float original[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    float original[3][3] = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
 
     float new[3][3];
 
