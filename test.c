@@ -27,11 +27,9 @@ int main()
         printf("\n");
     }
 
-    sys_call_status = syscall(TWOD_COPY_SYSCALL, original, new);
-
-    if (sys_call_status != EFAULT)
+    if (syscall(TWOD_COPY_SYSCALL, original, new) != EFAULT)
     {
-        printf("CopiedArray was - \n");
+        printf("new generated array is - \n");
 
         for (int i = 0; i < 3; i++)
         {
