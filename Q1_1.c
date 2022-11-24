@@ -46,7 +46,8 @@ void *thr_A()
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
-    printf("The runtime is %f seconds\n", totalrt);
+    printf("The runtime of thread A is %f seconds\n", totalrt);
+    pthread_exit(NULL);
 
     return 0;
 }
@@ -57,7 +58,7 @@ void *thr_B()
     struct sched_param *B = (struct sched_param *)malloc(sizeof(struct sched_param));
     if (B != NULL)
     {
-        B->sched_priority = 0;
+        B->sched_priority = 1;
     }
     pthread_setschedparam(pthread_self(), SCHED_RR, B);
     clock_gettime(CLOCK_REALTIME, &start);
@@ -65,7 +66,8 @@ void *thr_B()
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
-    printf("The runtime is %f seconds\n", totalrt);
+    printf("The runtime of thread B is %f seconds\n", totalrt);
+    pthread_exit(NULL);
 
     return 0;
 }
@@ -76,7 +78,7 @@ void *thr_C()
     struct sched_param *C = (struct sched_param *)malloc(sizeof(struct sched_param));
     if (C != NULL)
     {
-        C->sched_priority = 0;
+        C->sched_priority = 1;
     }
 
     pthread_setschedparam(pthread_self(), SCHED_FIFO, C);
@@ -85,7 +87,8 @@ void *thr_C()
     clock_gettime(CLOCK_REALTIME, &end);
     double totalrt = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
 
-    printf("The runtime is %f seconds\n", totalrt);
+    printf("The runtime of Thread C is %f seconds\n", totalrt);
+    pthread_exit(NULL);
 
     return 0;
 }
@@ -108,18 +111,6 @@ int main()
     if (pthread_create(&p3, NULL, &thr_C, NULL) != 0)
     {
         perror("FAILED TO CREATE THREAD");
-        return 1;
-    }
-    if (pthread_join(p1, NULL) != 0)
-    {
-        return 1;
-    }
-    if (pthread_join(p2, NULL) != 0)
-    {
-        return 1;
-    }
-    if (pthread_join(p3, NULL) != 0)
-    {
         return 1;
     }
     return 0;
