@@ -1,71 +1,47 @@
-#define _GNU_SOURCE
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <sys/syscall.h>
+#include <linux/kernel.h>
+#include <unistd.h>
+#include <errno.h>
 
-#define SYS_kern_2D_memcpy 449
+#define TWOD_COPY_SYSCALL 451
 
 int main()
 {
-    float m1[3][3] = {{1.0, 2.0, 3.0}, {3.0, 4.0, 5.0}, {5.0, 6.0, 7.0}};
-    float m2[3][3] = {{5.0, 5.0, 5.0}, {5.0, 5.0, 5.0}, {5.0, 5.0, 5.0}};
 
-    printf("This is the initial matrix1 is:\n");
+    float original[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
 
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            printf("%lf ", m1[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+    float new[3][3];
 
-    printf("This is the initial matrix2 is:\n");
+    long sys_call_status;
+
+   
+    printf("original matrix is - \n");
 
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
         {
-            printf("%lf ", m2[i][j]);
+            printf("%f ", original[i][j]);
         }
         printf("\n");
     }
-    printf("\n");
 
-    int res = syscall(SYS_kern_2D_memcpy, m1, m2, 3, 3);
+    sys_call_status = syscall(TWOD_COPY_SYSCALL, original, new);
 
-    if (res < 0)
+    if (sys_call_status != EFAULT)
     {
-        printf("ERROR! Could not perform system call.");
-        exit(1);
-    }
+        printf("CopiedArray was - \n");
 
-    printf("This is the final matrix1 is:\n");
-
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
+        for (int i = 0; i < 3; i++)
         {
-            printf("%lf ", m1[i][j]);
+            for (int j = 0; j < 3; j++)
+            {
+                printf("%f ", new[i][j]);
+            }
+            printf("\n");
         }
-        printf("\n");
     }
-    printf("\n");
-
-    printf("This is the final matrix2 is:\n");
-
-    for (int i = 0; i < 4; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            printf("%lf ", m2[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
 
     return 0;
 }
